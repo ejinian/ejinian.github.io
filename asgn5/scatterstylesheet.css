@@ -1,0 +1,25 @@
+/* copy pasted from book */
+body {
+  font: 13px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+/*Add Tooltip Type here*/
+div.tooltip {
+  pointer-events: none;
+  text-align: center;
+  border: 4px black;
+  padding: 25px;
+  position: absolute;
+  text-align: center;
+}

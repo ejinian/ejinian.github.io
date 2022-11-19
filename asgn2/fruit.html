@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <title></title>
+    <style>
+        div{
+            background-color: lightgray;
+        }
+    </style>
+    <script  type=”text/javascript” src=https://d3js.org/d3.v5.min.js></script>  
+    
+</head>
+<body>
+    <p id="fruit-paragraph"></p>
+    <script>
+        var fruits = [
+             {
+             kind: "grape",
+             color: "red",
+             quantity: 12,
+             tasty: true
+             },
+             {
+             kind: "kiwi",
+             color: "brown",
+             quantity: 98,
+             tasty: true
+             },
+             {
+              kind: "banana",
+              color: "yellow",
+              quantity: 0,
+              tasty: true
+             }
+        ];
+        document.getElementById("fruit-paragraph").innerHTML = fruits.map(function(fruit){
+            return "<div style='color:" + fruit.color + "'>" + fruit.quantity + " " + fruit.kind + "</div>";
+        }).join("");
+
+    </script>
+</body>
