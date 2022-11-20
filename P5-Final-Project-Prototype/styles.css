@@ -1,0 +1,21 @@
+.tooltip {
+    font-size: 15pt;
+    position: absolute;
+    text-align: center;
+    padding: 0.5rem;
+    border: 1px solid #313639;
+    border-radius: 8px;
+    pointer-events: none;
+    background-color: white;
+  }
+
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
