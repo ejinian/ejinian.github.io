@@ -5,6 +5,10 @@ var svg = d3.select("svg"),
     height = +svg.attr("height") - margin.top - margin.bottom,
     height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
+//Define Color
+var colors = d3.scaleOrdinal(d3.schemePaired)
+
+
 var parseDate = d3.timeParse("%b %Y");
 
 var x = d3.scaleTime().range([0, width]),
@@ -13,8 +17,7 @@ var x = d3.scaleTime().range([0, width]),
     y2 = d3.scaleLinear().range([height2, 0]);
 
 var xAxis = d3.axisBottom(x),
-    xAxis2 = d3.axisBottom(x2),
-    yAxis = d3.axisLeft(y);
+    xAxis2 = d3.axisBottom(x2);
 
 var brush = d3.brushX()
     .extent([[0, 0], [width, height2]])
@@ -25,18 +28,6 @@ var zoom = d3.zoom()
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
     .on("zoom", zoomed);
-
-var area = d3.area()
-    .curve(d3.curveMonotoneX)
-    .x(function(d) { return x(d.date); })
-    .y0(height)
-    .y1(function(d) { return y(d.price); });
-
-var area2 = d3.area()
-    .curve(d3.curveMonotoneX)
-    .x(function(d) { return x2(d.date); })
-    .y0(height2)
-    .y1(function(d) { return y2(d.price); });
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
@@ -56,28 +47,12 @@ d3.csv("testdata.csv", type, function(error, data) {
   if (error) throw error;
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.price; })]);
   x2.domain(x.domain());
-  y2.domain(y.domain());
-
-  focus.append("path")
-      .datum(data)
-      .attr("class", "area")
-      .attr("d", area);
 
   focus.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-
-  focus.append("g")
-      .attr("class", "axis axis--y")
-      .call(yAxis);
-
-  context.append("path")
-      .datum(data)
-      .attr("class", "area")
-      .attr("d", area2);
 
   context.append("g")
       .attr("class", "axis axis--x")
@@ -101,7 +76,8 @@ function brushed() {
   if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
   var s = d3.event.selection || x2.range();
   x.domain(s.map(x2.invert, x2));
-  focus.select(".area").attr("d", area);
+  //focus.select(".area").attr("d", area);
+  //Add focus to move the points
   focus.select(".axis--x").call(xAxis);
   svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
       .scale(width / (s[1] - s[0]))
@@ -112,7 +88,8 @@ function zoomed() {
   if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
   var t = d3.event.transform;
   x.domain(t.rescaleX(x2).domain());
-  focus.select(".area").attr("d", area);
+  //focus.select(".area").attr("d", area);
+  //Add focus to move the points
   focus.select(".axis--x").call(xAxis);
   context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 }

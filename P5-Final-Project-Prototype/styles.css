@@ -9,10 +9,8 @@
     background-color: white;
   }
 
-.area {
-  fill: steelblue;
-  clip-path: url(#clip);
-}
+/* Create a node css below */
+
 
 .zoom {
   cursor: move;
