@@ -17,3 +17,9 @@
   fill: none;
   pointer-events: all;
 }
+.look-nice { 
+	max-width: 500px; 
+	margin: 0 auto !important; 
+	float: none !important; 
+  text-align: center;
+}

@@ -49,9 +49,9 @@ d3.csv("testdata.csv", type, function(error, data) {
   x2.domain(x.domain());
 
   focus.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
 
   context.append("g")
       .attr("class", "axis axis--x")
@@ -98,6 +98,8 @@ d3.csv("testdata.csv", type, function(error, data) {
             tooltip.style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
         });
+    
+    var tooltip = d3.select(".tooltip");
 
     //add nodes to the svg right above the x axis
     svg.append("g")
@@ -106,37 +108,62 @@ d3.csv("testdata.csv", type, function(error, data) {
         .selectAll("circle")
         .data(data)
         .enter().append("circle")
-        .attr("r", 5)
+        .attr("r", 8)
         .attr("cx", function(d) { return x(d.date); })
         .attr("cy", 0)
-        .style("fill", function(d) { return colors(d.name); })
+        // .style("fill", function(d) { return colors(d.name); })
+        .style("fill", "steelblue")
+        .on("mouseover", function(d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            // console.log(Date.parse(d.date));
+            // convert d.date into only year string
+            var date = new Date(d.date);
+            var year = date.getFullYear();
+            tooltip.html("(Biblical Event Name)" + "<br/> Year: " + year + "<br/> More data: "  + d.price)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        }
+        )
+        .on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        }
+        )
+        .on("mousemove", function(d) {
+            tooltip.style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        }
+        );
 
 });
 
 function brushed() {
-  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-  var s = d3.event.selection || x2.range();
-  x.domain(s.map(x2.invert, x2));
-  //focus.select(".area").attr("d", area);
-  //Add focus to move the points
-  focus.select(".axis--x").call(xAxis);
-  svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
-      .scale(width / (s[1] - s[0]))
-      .translate(-s[0], 0));
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    var s = d3.event.selection || x2.range();
+    x.domain(s.map(x2.invert, x2));
+    svg.selectAll(".nodes circle")
+        .attr("cx", function(d) { return x(d.date); });
+    focus.select(".axis--x").call(xAxis);
+    svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+        .scale(width / (s[1] - s[0]))
+        .translate(-s[0], 0));
 }
 
 function zoomed() {
-  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-  var t = d3.event.transform;
-  x.domain(t.rescaleX(x2).domain());
-  //focus.select(".area").attr("d", area);
-  //Add focus to move the points
-  focus.select(".axis--x").call(xAxis);
-  context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+    var t = d3.event.transform;
+    x.domain(t.rescaleX(x2).domain());
+    svg.selectAll(".nodes circle")
+        .attr("cx", function(d) { return x(d.date); });
+    focus.select(".axis--x").call(xAxis);
+    context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 }
 
 function type(d) {
-  d.date = parseDate(d.date);
-  d.price = +d.price;
-  return d;
+    d.date = parseDate(d.date);
+    d.price = +d.price;
+    return d;
 }
