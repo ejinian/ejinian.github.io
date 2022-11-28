@@ -8,7 +8,6 @@ var svg = d3.select("svg"),
 //Define Color
 var colors = d3.scaleOrdinal(d3.schemePaired)
 
-
 var parseDate = d3.timeParse("%b %Y");
 
 var x = d3.scaleTime().range([0, width]),
@@ -31,7 +30,7 @@ var zoom = d3.zoom()
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
-  .append("rect")
+    .append("rect")
     .attr("width", width)
     .attr("height", height);
 
@@ -70,6 +69,48 @@ d3.csv("testdata.csv", type, function(error, data) {
       .attr("height", height)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(zoom);
+
+    //create a node for each data point
+    var node = focus.selectAll(".node")
+        .data(data)
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.price) + ")"; });
+
+    //add a circle to each node
+    node.append("circle")
+        .attr("r", 5)
+        .style("fill", function(d) { return colors(d.name); })
+        .on("mouseover", function(d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html(d.name + "<br/>"  + d.price)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        })
+        .on("mousemove", function(d) {
+            tooltip.style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        });
+
+    //add nodes to the svg right above the x axis
+    svg.append("g")
+        .attr("class", "nodes")
+        .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
+        .selectAll("circle")
+        .data(data)
+        .enter().append("circle")
+        .attr("r", 5)
+        .attr("cx", function(d) { return x(d.date); })
+        .attr("cy", 0)
+        .style("fill", function(d) { return colors(d.name); })
+
 });
 
 function brushed() {
