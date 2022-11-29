@@ -9,9 +9,6 @@
     background-color: white;
   }
 
-/* Create a node css below */
-
-
 .zoom {
   cursor: move;
   fill: none;
@@ -22,4 +19,20 @@
 	margin: 0 auto !important; 
 	float: none !important; 
   text-align: center;
+}
+
+.column {
+float: left;
+width: 25%;
+}
+
+.row::after {
+content: "";
+clear: both;
+display: table;
+}
+
+.body {
+  background-color: #000000;
+  color: #ffffff;
 }
