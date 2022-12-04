@@ -8,7 +8,7 @@ var svg = d3.select("svg"),
 //Define Color
 var colors = d3.scaleOrdinal(d3.schemePaired)
 
-var parseDate = d3.timeParse("%b %Y");
+var parseDate = d3.timeParse("%Y");
 
 var x = d3.scaleTime().range([0, width]),
     x2 = d3.scaleTime().range([0, width]),
@@ -79,7 +79,7 @@ d3.csv("testdata.csv", type, function(error, data) {
         .data(data)
         .enter().append("g")
         .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.price) + ")"; });
+        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.book) + ")"; });
 
     //add a circle to each node
     node.append("circle")
@@ -89,7 +89,7 @@ d3.csv("testdata.csv", type, function(error, data) {
             tooltip.transition()
                 .duration(200)
                 .style("opacity", .9);
-            tooltip.html(d.name + "<br/>"  + d.price)
+            tooltip.html(d.name + "<br/>"  + d.book)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
         })
@@ -125,7 +125,7 @@ d3.csv("testdata.csv", type, function(error, data) {
             // convert d.date into only year string
             var date = new Date(d.date);
             var year = date.getFullYear();
-            tooltip.html("(Biblical Event Name)" + "<br/> Year: " + year + "<br/> More data: "  + d.price)
+            tooltip.html(d.name + "<br/> Year: " + year + "<br/> Books: "  + d.book + "<br/> Description: " + d.desc)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
         }
@@ -168,6 +168,6 @@ function zoomed() {
 
 function type(d) {
     d.date = parseDate(d.date);
-    d.price = +d.price;
+    // d.book = +d.book;
     return d;
 }
