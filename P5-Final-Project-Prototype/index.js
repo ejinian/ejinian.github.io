@@ -45,8 +45,11 @@ var context = svg.append("g")
 d3.csv("testdata.csv", type, function(error, data) {
   if (error) throw error;
 
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  x2.domain(x.domain());
+//   this code reverses the timeline
+//   x.domain(d3.extent(data, function(d) { return d.date; })).range([width, 0]);
+//   x2.domain(x.domain()).range([width, 0]);
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    x2.domain(x.domain());
 
   focus.append("g")
     .attr("class", "axis axis--x")
