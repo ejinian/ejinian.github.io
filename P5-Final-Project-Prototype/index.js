@@ -194,6 +194,12 @@ function zoomed() {
 $(document).ready(function() {    
     $("img").css("width", "100%");
     $("img").css("height", "100%");
+
+    if (window.outerHeight <= 1060) {
+        $(".row").css("position", "relative");
+    } else {
+        $(".row").css("position", "absolute");
+    }
 });
 
 
