@@ -85,6 +85,8 @@ border-right:#1e1e1e 5px solid;
 border-bottom: #1e1e1e 5px solid;
 border-radius: 10px;
 box-shadow: #000000 10px 10px 20px;
+align-items: center;
+align-content: center;
 
 background: rgb(2,0,36);
 background: linear-gradient(-10deg, rgb(41, 40, 42) 100%, rgb(83, 83, 83) 100%);

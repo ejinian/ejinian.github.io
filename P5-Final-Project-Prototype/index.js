@@ -189,19 +189,16 @@ function zoomed() {
     context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 }
 
-window.addEventListener("resize", function() {
-     if (window.innerWidth <= 1720) {
-        $("img").css("width", "0%");
-        $("img").css("height", "0%");
 
-     } else {
+window.addEventListener("resize", function() {
+     if (window.outerWidth <= 1120) {
         $("img").css("width", "100%");
         $("img").css("height", "100%");
      }
 });
 
 window.addEventListener("resize", function() {
-    if (window.innerHeight <= 1060) {
+    if (window.outerHeight <= 1060) {
         $(".row").css("position", "relative");
     } else {
         $(".row").css("position", "absolute");
