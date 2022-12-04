@@ -51,15 +51,18 @@ d3.csv("testdata.csv", type, function(error, data) {
   focus.append("g")
     .attr("class", "axis axis--x")
     .attr("transform", "translate(0," + height + ")")
+    .style("stroke", "white")
     .call(xAxis);
 
   context.append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height2 + ")")
+      .style("stroke", "white")
       .call(xAxis2);
 
   context.append("g")
       .attr("class", "brush")
+      .style("stroke", "white")
       .call(brush)
       .call(brush.move, x.range());
 
@@ -68,6 +71,7 @@ d3.csv("testdata.csv", type, function(error, data) {
       .attr("width", width)
       .attr("height", height)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .style("stroke", "white")
       .call(zoom);
 
     //create a node for each data point
