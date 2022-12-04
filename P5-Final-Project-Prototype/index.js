@@ -27,7 +27,7 @@ var brush = d3.brushX()
     .on("brush end", brushed);
 
 var zoom = d3.zoom()
-    .scaleExtent([1, Infinity])
+    .scaleExtent([1, 200])
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
     .on("zoom", zoomed);
