@@ -13,6 +13,7 @@ var colors = d3.scaleOrdinal(d3.schemeCategory10);
 var x = d3.scaleTime().range([0, width]),
     x2 = d3.scaleTime().range([0, width]),
     x3 = d3.scaleTime().range([0, width]),
+    x4 = d3.scaleTime().range([0, width]),
     y = d3.scaleLinear().range([height, 0]),
     y2 = d3.scaleLinear().range([height2, 0]),
     y3 = d3.scaleLinear().range([height3, 0]);
@@ -55,6 +56,7 @@ d3.csv("testdata.csv", function(error, data) {
     x.domain(d3.extent(data, function(d) { return d.date - 1; }));
     x2.domain(x.domain());
     x3.domain(d3.extent(data, function(d) { return d.date - 1; }).reverse());
+    x4.domain(x3.domain());
 
   focus.append("g")
     .attr("class", "axis axis--x")
@@ -163,8 +165,9 @@ d3.csv("testdata.csv", function(error, data) {
 function brushed() {
     if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
     var s = d3.event.selection || x2.range();
+    var f = d3.event.selection || x4.range();
     x.domain(s.map(x2.invert, x2));
-    x3.domain(s.map(x2.invert, x2));
+    x3.domain(s.map(x4.invert, x4));
     svg.selectAll(".nodes circle")
         .attr("cx", function(d) { return x(d.date); });
     focus.select(".axis--x").call(xAxis);
@@ -178,10 +181,29 @@ function zoomed() {
     if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
     var t = d3.event.transform;
     x.domain(t.rescaleX(x2).domain());
-    x3.domain(t.rescaleX(x2).domain());
+    x3.domain(t.rescaleX(x4).domain());
     svg.selectAll(".nodes circle")
         .attr("cx", function(d) { return x(d.date); });
     focus.select(".axis--x").call(xAxis);
     secondLine.select(".axis--x").call(xAxis3);
     context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 }
+
+window.addEventListener("resize", function() {
+     if (window.innerWidth <= 1720) {
+        $("img").css("width", "0%");
+        $("img").css("height", "0%");
+
+     } else {
+        $("img").css("width", "100%");
+        $("img").css("height", "100%");
+     }
+});
+
+window.addEventListener("resize", function() {
+    if (window.innerHeight <= 1060) {
+        $(".row").css("position", "relative");
+    } else {
+        $(".row").css("position", "absolute");
+    }
+});

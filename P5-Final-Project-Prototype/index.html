@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="./styles.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <style>
         svg {
             display: block;
@@ -13,16 +14,23 @@
     </style>
 </head>
 <body>
+
     <div class="look-nice">
-        <h1 style = "text-align:center; color:steelblue"><bold>Biblical Events Timeline</bold></h1>
-        <p style="text-align:center;">A timeline contains various historical events in chronological order.
-        This timeline shows major biblical events with detail. These are represented
-        as nodes which live dynamically on the timeline.</p>
+        <h1 id="title" style = "text-align:center;"><bold>Biblical Events Timeline</bold></h1>
     </div>
     <div class="tooltip" style="opacity: 0;"></div>
 
-    <svg width="960" height="500"><line x1="40" y1="350" x2="940" y2="350" style="stroke:white;stroke-width:1" /></svg>
-    
+    <div id="timeline">
+        <div id="child left">         
+            <img style="float: left;" id="ig" src="easy.png"></img>
+        </div>
+        <div id="child mid">    
+            <svg style="float: center;"width="960" height="500"><line x1="40" y1="350" x2="940" y2="350" style="stroke:white;stroke-width:1" /></svg>
+        </div>
+        <div id="child right">         
+            <img style="float: right;" id="img" src="easy.png"></img>
+        </div>
+    </div>
     <script type="text/javascript" src="index.js"></script>
 
     <div class="row" style="background-color:#8109a9;">
@@ -40,6 +48,7 @@
         </div>
         <div class="column" style="text-align: center;">
             <h2>Visualization Sources:</h2>
+            <p><a href="https://code.jquery.com/jquery-3.5.1.min.js" target = "_blank">jQuery</a></p>
             <p><a href="https://observablehq.com/@d3/focus-context" target = "_blank">Brushable and Zoomable Graph</a></p>
         </div>
         <div class="column" style="text-align: center;">
