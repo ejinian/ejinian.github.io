@@ -54,7 +54,7 @@ width: 25%;
 
 .row {
   position: absolute;
-  bottom: 0;
+  bottom: 0 !important;
   width: 100%;
   border-top: #9362b9 5px solid;
   border-left: #72517f 5px solid;

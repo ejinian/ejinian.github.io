@@ -190,12 +190,20 @@ function zoomed() {
 }
 
 
+//on document ready function
+$(document).ready(function() {    
+    $("img").css("width", "100%");
+    $("img").css("height", "100%");
+});
+
+
 window.addEventListener("resize", function() {
      if (window.outerWidth <= 1120) {
         $("img").css("width", "100%");
         $("img").css("height", "100%");
      }
 });
+
 
 window.addEventListener("resize", function() {
     if (window.outerHeight <= 1060) {
