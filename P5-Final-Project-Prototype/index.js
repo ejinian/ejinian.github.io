@@ -147,6 +147,7 @@ d3.csv("testdata.csv", function(error, data) {
             tooltip.html(d.name + "<br/> Year: " + year + "<br/> Books: "  + d.book)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
+            console.log(d);
         }
         )
         .on("mouseout", function(d) {
@@ -158,6 +159,19 @@ d3.csv("testdata.csv", function(error, data) {
         .on("mousemove", function(d) {
             tooltip.style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
+        })
+        // on click, display an the imagesource of the book
+        .on("click", function(d) {
+            console.log(d);
+            
+            var bookImage = d.image;
+            
+            console.log(bookImage);
+            // var zoomRect = d3.select("zoom");
+            // console.log(zoomRect);
+            // zoomRect.append("image")
+            //     .style("opacity", 0)
+            //     .attr("xlink:href", bookImage);
         }
         );
 });

@@ -97,3 +97,9 @@ background: linear-gradient(-10deg, rgb(41, 40, 42) 100%, rgb(83, 83, 83) 100%);
 #child {
   flex: 3;
 }
+
+.center-amogus{
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: auto;
+}
