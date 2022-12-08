@@ -9,7 +9,6 @@
         svg {
             display: block;
             margin: 0 auto;
-            border: 2px solid black;
         }
     </style>
 </head>
@@ -26,10 +25,12 @@
                 <img style="float: left;" id="ig" src="easy.png"></img>
             </div>
             <div id="child mid">
-                <svg style="float: center;"width="960" height="500"><line x1="40" y1="350" x2="940" y2="350" style="stroke:white;stroke-width:1" /></svg>
+                <svg style="float: center;"width="960" height="200"><line x1="40" y1="50" x2="940" y2="50" style="stroke:white;stroke-width:1" /></svg>
+                <div id="imagecontainer" style="max-width: 1000px; display: flex;">
+                    <img id="book-image" style="max-height: 300px;"></img>
+                    <p id="book-text" style="margin-left: 20px;"></p>
+                </div>
             </div>
-            <img id="book-image"></img>
-            <p id="book-text"></p>
             <div id="child right">         
                 <img style="float: right;" id="img" src="easy.png"></img>
             </div>

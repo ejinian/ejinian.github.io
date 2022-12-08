@@ -1,7 +1,7 @@
 var svg = d3.select("svg"),
     margin = {top: 20, right: 20, bottom: 110, left: 40},
-    margin2 = {top: 430, right: 20, bottom: 30, left: 40},
-    margin3 = {top: 352, right: 20, bottom: 130, left: 40},
+    margin2 = {top: 130, right: 20, bottom: 30, left: 40},
+    margin3 = {top: 52, right: 20, bottom: 130, left: 40},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom,
     height2 = +svg.attr("height") - margin2.top - margin2.bottom;
@@ -170,7 +170,7 @@ d3.csv("testdata.csv", function(error, data) {
             var img = document.getElementById("book-image");
             var text = document.getElementById("book-text");
             img.src = bookImage;
-            img.style.width = "30%";
+            //img.style.width = "30%";
             text.innerHTML = d.desc;
             var zoomRect = d3.select(".zoom");
             console.log(zoomRect);
