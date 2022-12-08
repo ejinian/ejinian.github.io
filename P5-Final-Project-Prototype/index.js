@@ -169,18 +169,10 @@ d3.csv("testdata.csv", function(error, data) {
             var bookImage = d.image;
             var img = document.getElementById("book-image");
             var text = document.getElementById("book-text");
-            img.src = bookImage;
-            //img.style.width = "30%";
+            //based on the value of bookImage, change the src of the image from the folder imges
+            img.src = `imges/${bookImage}`
             text.innerHTML = d.desc;
             var zoomRect = d3.select(".zoom");
-            console.log(zoomRect);
-            // zoomRect.append("svg:image")
-            //     .attr("xlink:href", bookImage)
-            //     .attr("x", 0)
-            //     .attr("y", 0)
-            //     .attr("width", 100)
-            //     .attr("height", 100)
-            //     .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")");
         }
         );
 });
@@ -223,6 +215,12 @@ $(document).ready(function() {
     } else {
         $(".row").css("position", "absolute");
     }
+
+    var img = document.getElementById("book-image");
+    var text = document.getElementById("book-text");
+    //get image from folder imges and display it
+    img.src = "imges/1.png";
+    text.innerHTML = "The New Testament begins with the birth of Jesus Christ. The New Testament is the second part of the Christian Bible. It is the record of the life and teachings of Jesus Christ and the early Christian church. The New Testament is divided into two parts: the Gospels and the Epistles. The Gospels are the four books that tell the story of Jesus’ life and ministry. The Epistles are the letters written by the apostles to the early Christian churches. The New Testament begins with the birth of Jesus Christ. The New Testament is the second part of the Christian Bible. It is the record of the life and teachings of Jesus Christ and the early Christian church. The New Testament is divided into two parts: the Gospels and the Epistles. The Gospels are the four books that tell the story of Jesus’ life and ministry. The Epistles are the letters written by the apostles to the early Christian churches.";
 });
 
 
