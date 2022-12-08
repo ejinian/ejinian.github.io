@@ -53,7 +53,7 @@ var secondLine = svg.append("g")
 d3.csv("testdata.csv", function(error, data) {
   if (error) throw error;
 
-    x.domain(d3.extent(data, function(d) { return d.date - 1; }));
+    x.domain(d3.extent(data, function(d) { if (d.period == "AD") {return d.date;} }));
     x2.domain(x.domain());
     x3.domain(d3.extent(data, function(d) { return d.date - 1; }).reverse());
     x4.domain(x3.domain());
@@ -95,36 +95,9 @@ d3.csv("testdata.csv", function(error, data) {
         .data(data)
         .enter().append("g")
         .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.book) + ")"; });
-
-    /*
-    //add a circle to each node
-    node.append("circle")
-        .attr("r", 5)
-        .style("fill", function(d) { return colors(d.name); })
-        .on("mouseover", function(d) {
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", .9);
-            tooltip.html(d.name + "<br/>"  + d.book)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        })
-        .on("mouseout", function(d) {
-            tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        })
-        .on("mousemove", function(d) {
-            tooltip.style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        });
-        */
+        .attr("transform", function(d) { if (d.period == "BC") {return "translate(" + x3(d.date) + "," + y3(d.book) + ")"; } else {return "translate(" + x(d.date) + "," + y(d.book) + ")"; }});
     
     var tooltip = d3.select(".tooltip");
-
-    //save the value of the node's period in string format to a variable
-    var period = 
 
     //add nodes to the svg right above the x axis
     svg.append("g")
@@ -134,7 +107,7 @@ d3.csv("testdata.csv", function(error, data) {
         .data(data)
         .enter().append("circle")
         .attr("r", 8)
-        .attr("cx", function(d) { return x(d.date); })
+        .attr("cx", function(d) { if (d.period == "BC") {return x3(d.date);} else {return x(d.date)} })
         .attr("cy", function(d) { if (d.period == "BC") { return -40; } else { return 0; } })
         .style("fill", function(d) { return colors(d.period); })
         .on("mouseover", function(d) {
@@ -184,7 +157,7 @@ function brushed() {
     x.domain(s.map(x2.invert, x2));
     x3.domain(s.map(x4.invert, x4));
     svg.selectAll(".nodes circle")
-        .attr("cx", function(d) { return x(d.date); });
+        .attr("cx", function(d) { if (d.period == "AD") {return x(d.date);} else {return x3(d.date);} });
     focus.select(".axis--x").call(xAxis);
     secondLine.select(".axis--x").call(xAxis3);
     svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
@@ -198,7 +171,7 @@ function zoomed() {
     x.domain(t.rescaleX(x2).domain());
     x3.domain(t.rescaleX(x4).domain());
     svg.selectAll(".nodes circle")
-        .attr("cx", function(d) { return x(d.date); });
+        .attr("cx", function(d) { if (d.period == "AD") {return x(d.date);} else {return x3(d.date);} });
     focus.select(".axis--x").call(xAxis);
     secondLine.select(".axis--x").call(xAxis3);
     context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
@@ -220,7 +193,7 @@ $(document).ready(function() {
     var text = document.getElementById("book-text");
     //get image from folder imges and display it
     img.src = "imges/1.png";
-    text.innerHTML = "The New Testament begins with the birth of Jesus Christ. The New Testament is the second part of the Christian Bible. It is the record of the life and teachings of Jesus Christ and the early Christian church. The New Testament is divided into two parts: the Gospels and the Epistles. The Gospels are the four books that tell the story of Jesus’ life and ministry. The Epistles are the letters written by the apostles to the early Christian churches. The New Testament begins with the birth of Jesus Christ. The New Testament is the second part of the Christian Bible. It is the record of the life and teachings of Jesus Christ and the early Christian church. The New Testament is divided into two parts: the Gospels and the Epistles. The Gospels are the four books that tell the story of Jesus’ life and ministry. The Epistles are the letters written by the apostles to the early Christian churches.";
+    text.innerHTML = "Adam is the first man created by God Himself. (Genesis 1:26 KJV) And God said, Let us make man in our image, after our likeness…” The Lord molded a man from the dust and gave him the breath of life, thus he became a living body with a soul (Genesis 2:7 KJV ). God then placed “man” in the Garden of Eden wherein he was commissioned to name and post authority to all living creatures. As for the Biblical timeline, this marks the beginning of mankind at 4004 according to Bishop Ussher’s chronology found in the King James Bible. Eve was created using one of Adam’s ribs by god and they were giving life in the garden of eden, their one rule was to not eat the apples. The 3rd chapter of Genesis tells us the story of how the serpent tempted Eve to eat the fruit from the forbidden tree. Eve found the fruit good and shared this with Adam. This action was the first disobedience recorded in the Bible. (Genesis 3:1-24 KJV) After disobeying God, Adam and Eve were cast out from the garden of Eden. Adam and Eve bear children – Cain, Abel, and Seth. (Genesis 4:1-26)";
 });
 
 
