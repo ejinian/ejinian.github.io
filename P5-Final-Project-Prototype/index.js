@@ -147,13 +147,17 @@ d3.csv("testdata.csv", function(error, data) {
             tooltip.html(d.name + "<br/> Year: " + year + "<br/> Books: "  + d.book)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
-            console.log(d);
+            d3.select(this)
+                .attr("r", 12);
+
         }
         )
         .on("mouseout", function(d) {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
+            d3.select(this)
+                .attr("r", 8);
         }
         )
         .on("mousemove", function(d) {
@@ -162,16 +166,21 @@ d3.csv("testdata.csv", function(error, data) {
         })
         // on click, display an the imagesource of the book
         .on("click", function(d) {
-            console.log(d);
-            
             var bookImage = d.image;
-            
-            console.log(bookImage);
-            // var zoomRect = d3.select("zoom");
-            // console.log(zoomRect);
-            // zoomRect.append("image")
-            //     .style("opacity", 0)
-            //     .attr("xlink:href", bookImage);
+            var img = document.getElementById("book-image");
+            var text = document.getElementById("book-text");
+            img.src = bookImage;
+            img.style.width = "30%";
+            text.innerHTML = d.desc;
+            var zoomRect = d3.select(".zoom");
+            console.log(zoomRect);
+            // zoomRect.append("svg:image")
+            //     .attr("xlink:href", bookImage)
+            //     .attr("x", 0)
+            //     .attr("y", 0)
+            //     .attr("width", 100)
+            //     .attr("height", 100)
+            //     .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")");
         }
         );
 });
